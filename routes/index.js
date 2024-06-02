@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var jwt=require('jsonwebtoken');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -104,20 +104,6 @@ const deriveKeyFromPassword = async (passwordString, body, saltBuffer) => {
   console.log("Key=",keyString);
   return { keyString, saltString };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   username=req.body.uname;
   console.log(username); // test that we have the username filled out.
 
@@ -161,8 +147,33 @@ const deriveKeyFromPassword = async (passwordString, body, saltBuffer) => {
           var password=req.body.pwd;
           const { keyString, saltString } = await deriveKeyFromPassword(password, req.body, saltBuffer);
           console.log('Test Cred');
-          console.log(keyString);
-          console.log(object.key);
+          //console.log(keyString);
+          //console.log(object.key);
+          if (keyString!=object.key){
+            console.log("Login Failed")
+            res.render('index', { title: 'Elections--Login Failed' });
+          }
+          else{
+            
+            global.user_id = object._id;
+            global.role = object.role;
+            role=global.role
+            user_id=global.user_id
+            console.log(role);
+            console.log(user_id);
+            console.log(username);
+            var token = jwt.sign({
+              id: user_id, role: role, name:username
+              }, process.env.BEARER_TOKEN, {
+              expiresIn: 86400000
+              });
+            console.log(token);
+            global.userToken=token;
+            res.render('index', { title: 'Login Successful--SHOULD NOW GO TO DASHBOARD VIEW',
+                      id: user_id,
+                      role: role,
+                      name: username });
+          }
         }
     }
     finally {
@@ -175,92 +186,7 @@ const deriveKeyFromPassword = async (passwordString, body, saltBuffer) => {
   
 
 
- 
-  //         else {
-  //             console.log('User is found');
-  //             console.log(responseParsed.user);
-  //             var user_id=responseParsed.user.user_id;
-  //             var role=responseParsed.user.type;
-  //             var username=responseParsed.user.username;
-  //             console.log('User id=',user_id);
-  //             var salt=responseParsed.user.salt;
-  //             var saltBuffer=convertHexToBuffer(salt);
-  //             var password=req.body.pword;
-  //             const { keyString, saltString } = await deriveKeyFromPassword(password, req.body, saltBuffer);
-  //             console.log('Test Cred');
 
-  //             const httpRequest = require('https');
-
-  //             const options = {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Authorization': 'bearer '+process.env.BEARER_TOKEN,
-  //                 'content-type': 'application/json'
-  //             },
-  //             };
-
-  //             const datakey = {
-  //                 "key": keyString
-  //             };
-  //             const data=JSON.stringify(datakey);
-
-  //             const authurl= 'https://inbdpa.api.hscc.bdpa.org/v1/users/'+user_id+'/auth'
-  //             const request = httpRequest.request(authurl, options, response => {       
-  //             console.log('Status', response.statusCode);
-  //             console.log('Headers', response.headers);
-  //             let responseData = '';
-
-  //             response.on('data', dataChunk => {
-  //                 responseData += dataChunk;
-  //             });
-  //             response.on('end', () => {
-  //                 console.log('Response: ', responseData)
-  //                 let responseParsed=JSON.parse(responseData);
-  //                 console.log("Success", responseParsed.success);
-  //                 if (responseParsed.success==true)
-  //                 {
-  //                     console.log("Successful log");
-  //                     console.log(role);
-  //                     console.log(user_id);
-  //                     global.user_id = user_id;
-  //                     global.role = role;
-
-  //                     console.log(username);
-  //                     var token = jwt.sign({
-  //                       id: user_id, role: role, name:username
-  //                       }, process.env.BEARER_TOKEN, {
-  //                       expiresIn: 86400000
-  //                       });
-  //                       console.log(token);
-  //                     global.userToken=token;
-  //                     res.render('goodlogin', { title: 'Login Successful',
-  //                     id: user_id,
-  //                     role: role,
-  //                     name: username });
-  //                 }
-  //                 else
-  //                 {
-  //                     res.render('login', { title: 'Login UnSuccessful',
-  //                     id: res.locals.user_id,
-  //                     role: res.locals.role,
-  //                     name: res.locals.name });
-  //                 }
-  //             });
-  //             });
-
-  //     request.on('error', error => console.log('ERROR', error));
-
-  //     request.write(data);
-  //     request.end();
-  //     }
-
-  // });
-  // });
-
-  // request.on('error', error => console.log('ERROR', error));
-
-  // request.end(); 
-
-  res.render('index', { title: 'Elections' });
+  //res.render('index', { title: 'Elections' });
 });
 module.exports = router;
