@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var jwt=require('jsonwebtoken');
+const auth = require("../middleware/verifyToken");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -169,7 +170,7 @@ const deriveKeyFromPassword = async (passwordString, body, saltBuffer) => {
               });
             console.log(token);
             global.userToken=token;
-            res.render('index', { title: 'Login Successful--SHOULD NOW GO TO DASHBOARD VIEW',
+            res.render('dashboard', { title: 'Login Successful--SHOULD NOW GO TO DASHBOARD VIEW',
                       id: user_id,
                       role: role,
                       name: username });
