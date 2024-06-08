@@ -19,4 +19,14 @@
       <input type="submit" value="LOGIN">
     </form>
   </body>
+  <script>
+    document.getElementById('getElectionInfo').addEventListener('click', function() {
+        fetch('/getelectioninfo')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalElections').textContent = data.totalElections;
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    </script>
 </html>
