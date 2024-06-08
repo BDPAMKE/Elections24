@@ -168,7 +168,7 @@ router.post('/', auth, async(req,res,next) => {
                     address:req.body.addr,
                     deleted:false,
                     key:keyString,
-                    sale:saltString,
+                    salt:saltString,
                     lastIP:"",
                     lastLoginTime:"",
                     pwdupdated:false
