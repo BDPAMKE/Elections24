@@ -13,7 +13,7 @@ var electionlistRouter = require('./routes/electionlist');
 var viewelectionRouter = require('./routes/viewelection');
 var electionInfoRouter = require('./routes/getelectioninfo');
 
-var getelectionInfRouter = require('./routes/getElectionInfo');
+var getelectionInfRouter = require('./routes/getelectioninfo');
 
 
 var app = express();
