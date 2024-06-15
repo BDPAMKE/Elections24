@@ -8,7 +8,7 @@ const auth = require("../middleware/verifyToken");
 
 // Generic route to get a list of elections from the beginning (first 100)
 router.get('/', auth, function(req,res,next) {
-    const url = 'https://elections-irv.api.hscc.bdpa.org/v1/elections';
+    const url = 'https://elections-cpl.api.hscc.bdpa.org/v1/elections';
     const token = process.env.BEARER_TOKEN;
     //console.log(url); //Debug
     
