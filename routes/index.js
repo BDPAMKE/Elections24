@@ -4,7 +4,17 @@ var jwt=require('jsonwebtoken');
 const auth = require("../middleware/verifyToken");
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'ELECTIONS24' });
+  // Example data - replace with actual data retrieval logic
+  const totalElections = 10;
+  const totalOpenElections = 5;
+  const totalClosedElections = 5;
+
+  res.render('index', {
+    title: 'Elections 2024',
+    totalElections: totalElections,
+    totalOpenElections: totalOpenElections,
+    totalClosedElections: totalClosedElections
+  });
 });
 
 router.post('/', function(req,res,next) {
