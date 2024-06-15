@@ -10,7 +10,7 @@ var registerRouter = require('./routes/register');
 var dashboardRouter = require('./routes/dashboard');
 var electionlistRouter = require('./routes/electionlist');
 var viewelectionRouter = require('./routes/viewelection');
-var electionInfoRouter = require('./routes/getelectioninfo');
+//var electionInfoRouter = require('./routes/getelectioninfo');
 var app = express();
 
 // view engine setup
@@ -29,7 +29,7 @@ app.use('/dashboard', dashboardRouter);
 app.use('/register', registerRouter);
 app.use('/electionlist', electionlistRouter);
 app.use('/viewelection', viewelectionRouter);
-app.use('/getelectioninfo', electionInfoRouter);
+//app.use('/getelectioninfo', electionInfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -12,5 +12,10 @@
     <p>Election View</p>
     <p><%= electioninfo %></p>
     <h2>Title: <%= electioninfo.title %></h2>
+    <h3> Ballots </h3>
+    <%for (var ballot in ballotinfo){%>
+       <%= JSON.stringify(ballotinfo[ballot].ranking) %> <br> 
+  
+  <%}%> <!-- to close out for loop-->
   </body>
 </html>
