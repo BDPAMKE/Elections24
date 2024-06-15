@@ -9,7 +9,7 @@ const auth = require("../middleware/verifyToken");
 // GET route for a specific user (based on username)
 router.get('/:election_id', auth, function(req,res,next) {
     //Set up API call
-    const url = 'https://elections-cpl.api.hscc.bdpa.org/v1/elections/' + req.params.election_id;
+    const url = 'https://elections-irv.api.hscc.bdpa.org/v1/election/' + req.params.election_id;
     const token = process.env.BEARER_TOKEN;
     // Pass url and token into RestAPIGet and pull information from response
     myGetRestCall.getWithBearerToken(url, token)
@@ -17,7 +17,7 @@ router.get('/:election_id', auth, function(req,res,next) {
     console.log('REST CALL',data);
     if (data.success){
 
-        res.render('viewelection',{title:'Election Call Successful',electioninfo:data.election});
+        res.render('electionlist',{title:'Election Call Successful'});
 
 
     } // closes if statement
