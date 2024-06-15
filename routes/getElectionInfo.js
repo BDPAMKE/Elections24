@@ -8,10 +8,10 @@ var router = express.Router();
 // Normal include statements
 
 const myGetRestCall=require("../middleware/RestAPIGet");
-const myIncrementRestCall = require("../middleware/RestAPIIncrement");
+//const myIncrementRestCall = require("../middleware/RestAPIIncrement");
 const auth = require("../middleware/verifyToken");
 //including middleware
-var store = require('store');
+//var store = require('store');
 
 // Generic route to get a list of users from the beginning (first 100)
 router.get('/', auth, function(req,res,next) {
