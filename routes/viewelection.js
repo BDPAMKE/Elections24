@@ -25,8 +25,9 @@ router.get('/:election_id', auth, function(req,res,next) {
             console.log('BALLOT CALL', data);
             if (data.success){
                 ballotinfo=data.ballots;
-                countBallots.GetBallotPreferenceCount(electioninfo.options,ballotinfo);
-                res.render('viewelection',{title:'Election Call Successful',electioninfo:electioninfo,ballots:ballotinfo});
+                ballotranking=countBallots.GetBallotPreferenceCount(electioninfo.options,ballotinfo);
+                console.log('BALLOT RANKING',ballotranking)
+                res.render('viewelection',{title:'Election Call Successful',electioninfo:electioninfo,ballots:ballotranking});
             }
             else{
                 res.render('error', {title: 'Ballot call failed'
