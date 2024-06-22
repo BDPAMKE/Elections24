@@ -7,7 +7,7 @@ GetBallotPreferenceCount: function(options,ballots){
     let ballotkey={};   
 
     for (var ballot in ballots){
-        console.log(ballots[ballot].ranking);
+        //console.log(ballots[ballot].ranking);
         
         var ranking=ballots[ballot].ranking;
         var entries = Object.entries(ranking);
@@ -23,7 +23,7 @@ GetBallotPreferenceCount: function(options,ballots){
         else{
             ballotkey[entries]=1
         }
-        console.log(ballotkey)
+        //console.log(ballotkey)
     }
 
     return ballotkey;
