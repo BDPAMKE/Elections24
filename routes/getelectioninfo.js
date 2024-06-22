@@ -34,9 +34,10 @@ router.get('/', auth, function(req,res,next) {
             // var userCount= store.get('users').count;
 
             res.render('index', { 
-               totalElections: electionInfo.upcomingElections,
+                title: 'Elections 2024',
+               upcomingElections: electionInfo.upcomingElections,
                openElections: electionInfo.openElections,
-               closedElections: electionInfo.closedElections,
+               closedElections: electionInfo.closedElections
                 
             });
         } // closes if statement
