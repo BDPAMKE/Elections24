@@ -25,28 +25,50 @@ module.exports={
             for (var i=0;i<options.length;i++){
                 topballotpoints[options[i]]=0
             }
-            for (ballot in sortedballotArray){
-                ballotarray=sortedballotArray[ballot];
-                //console.log("array",ballotarray)
-                var pick=0
-                var ballotcounted=false;
-                while (pick<ballotarray.length && !ballotcounted){
-                    var option=ballotarray[pick][0]
-                    //console.log("check option",option)
-                    if (option in topballotpoints){
-                        topballotpoints[option]+=1;
-                        //console.log("Vote added for ",option)
-                        ballotcounted=true;
-                    }
-                    pick++
+            var winner=false;
+            while (!winner && Object.keys(topballotpoints).length>0){
+                if (topballotpoints.length==1){
+                    console.log("Last one left:",Object.keys(topballotpoints)[0])
+                    return
                 }
-            }
-            console.log(topballotpoints)
-            var totalvotes=sortedballotArray.length
-            console.log("total votes=",totalvotes)
-            for (key in topballotpoints){
-                if (topballotpoints[key]*2>totalvotes){
-                    console.log("WINNER=",key)
+                for (ballot in sortedballotArray){
+                    ballotarray=sortedballotArray[ballot];
+                    console.log("array",ballotarray)
+                    var pick=0
+                    var ballotcounted=false;
+                    while (pick<ballotarray.length && !ballotcounted){
+                        var option=ballotarray[pick][0]
+                        //console.log("check option",option)
+                        if (option in topballotpoints){
+                            topballotpoints[option]+=1;
+                            //console.log("Vote added for ",option)
+                            ballotcounted=true;
+                        }
+                        pick++
+                    }
+                }
+                console.log(topballotpoints)
+                var totalvotes=sortedballotArray.length
+                console.log("total votes=",totalvotes)
+                for (key in topballotpoints){
+                    if (topballotpoints[key]*2>totalvotes){
+                        console.log("WINNER=",key)
+                        winner=true;
+                        return
+                    }
+                }
+                var keys   = Object.keys(topballotpoints);
+                const [[match, lowestVal]] = Object.entries(topballotpoints).sort(function ([,valA], [,valB]) { return valA - valB });
+                console.log("ELIMINATE?",match)
+                if (!winner){
+                    for (key in keys){
+                        if (keys[key]==match){
+                            delete topballotpoints[match]
+                        }
+                        else{
+                            topballotpoints[keys[key]]=0
+                        }
+                    }
                 }
             }
         }
