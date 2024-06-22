@@ -5,6 +5,7 @@ var router = express.Router();
 const myGetRestCall=require("../middleware/RestAPIGet");
 const auth = require("../middleware/verifyToken");
 const countBallots=require("../middleware/countBallots");
+const getWinner=require("../middleware/getBallotWinner");
 //including middleware
 
 // GET route for a specific user (based on username)
@@ -25,8 +26,10 @@ router.get('/:election_id', auth, function(req,res,next) {
             console.log('BALLOT CALL', data);
             if (data.success){
                 ballotinfo=data.ballots;
-                countBallots.GetBallotPreferenceCount(electioninfo.options,ballotinfo);
-                res.render('viewelection',{title:'Election Call Successful',electioninfo:electioninfo,ballots:ballotinfo});
+                ballotranking=countBallots.GetBallotPreferenceCount(electioninfo.options,ballotinfo);
+                console.log('BALLOT RANKING',ballotranking)
+                getWinner.GetBallotWinner(electioninfo.type,electioninfo.options,ballotinfo);
+                res.render('viewelection',{title:'Election Call Successful',electioninfo:electioninfo,ballots:ballotranking});
             }
             else{
                 res.render('error', {title: 'Ballot call failed'
