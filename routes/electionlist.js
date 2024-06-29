@@ -24,7 +24,9 @@ router.get('/', auth, function(req,res,next) {
 
             res.render('electionlist', { 
                 title: 'Elections List' , 
-                elections: electionlist
+                elections: electionlist,
+                role: res.locals.role,
+                
             });
         } // closes if statement
         else{

@@ -4,7 +4,12 @@ var jwt=require('jsonwebtoken');
 const auth = require("../middleware/verifyToken");
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'ELECTIONS24' });
+  // Example data - replace with actual data retrieval logic
+  
+  res.render('index', {
+    title: 'Elections 2024',
+   
+  });
 });
 
 router.post('/', function(req,res,next) {
