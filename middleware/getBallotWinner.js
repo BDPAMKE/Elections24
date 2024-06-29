@@ -74,11 +74,58 @@ module.exports={
         }
         else if (type=="cpl"){
             console.log("PAIRWISE COMPARISON")
+            //set pairwise points for determining who wins how many pairwise comparisions
             var pairwisepoints={}
             for (var i=0;i<options.length;i++){
                 pairwisepoints[options[i]]=0
             }
+            //console.log(pairwisepoints)
+            for (var i=0;i<options.length;i++){
+                for (var j=i+1;j<options.length;j++){
+                    var optioni=options[i]
+                    var optionj=options[j]
+                    //console.log(options[i],options[j])      //Identify pairs to compare...
+                    var ivotes=0;
+                    var jvotes=0;
+                    for (b in ballots){
+                        var ranking=ballots[b].ranking;
+                        //console.log(ballots[b].ranking);
+                        if (optioni in ranking){
+                            if (!(optionj in ranking)){
+                                ivotes++; //if only the i option is in the ranking, i gets the vote for the ballot
+                            }
+                            else{
+                                if (ranking[optioni]<ranking[optionj]){
+                                    ivotes++
+                                }
+                                else{
+                                    jvotes++
+                                }
+                            }
+                        }
+                        else {
+                            if (optionj in ranking){
+                                jvotes++
+                            }
+                        }
+                    }
+                    //console.log(optioni,ivotes,optionj,jvotes)
+                    if (ivotes>jvotes){
+                        pairwisepoints[optioni]++
+                    }
+                    else if (jvotes>ivotes){
+                        pairwisepoints[optionj]++
+                    }
+                    else{
+                        pairwisepoints[optioni]+=0.5
+                        pairwisepoints[optionj]+=0.5
+                    }
+                }//j loop
+            }//i loop
             console.log(pairwisepoints)
+            var keys   = Object.keys(pairwisepoints);
+            const [[winner, lowestVal]] = Object.entries(pairwisepoints).sort(function ([,valA], [,valB]) { return valB - valA });
+            console.log("Winner",winner)
         }
 
 
