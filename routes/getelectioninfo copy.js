@@ -27,20 +27,19 @@ router.get('/', auth, function(req,res,next) {
         if (data.success){
             // SUBJECT TO CHANGE
             var electionInfo=data.info;
-            var upcomingElections=data.info.upcomingElections;
-            var openElections=data.info.openElections;
-            var closedElections=data.info.closedElections;
 
-            res.json({
-                "upcomingElections": upcomingElections,
-                "openElections": openElections,
-                "closedElections": closedElections
-              });
-
+            
               
             // Get the count of the number of users from store
             // var userCount= store.get('users').count;
 
+            res.render('index', { 
+                title: 'Elections 2024',
+               upcomingElections: electionInfo.upcomingElections,
+               openElections: electionInfo.openElections,
+               closedElections: electionInfo.closedElections
+                
+            });
         } // closes if statement
         else{
             res.render('error', {title: 'Stats call failed', 

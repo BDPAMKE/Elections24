@@ -1,19 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var jwt=require('jsonwebtoken');
-const auth = require("../middleware/verifyToken");
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  // Example data - replace with actual data retrieval logic
-  const upcomingElections = 10;
-  const openElections = 5;
-  const closedElections = 5;
-
   res.render('index', {
-    title: 'Elections 2024',
-    upcomingElections: upcomingElections,
-    openElections: openElections,
-    closedElections: closedElections
+    title: 'Elections 2024'
   });
 });
 

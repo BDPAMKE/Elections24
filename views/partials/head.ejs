@@ -1,4 +1,15 @@
 <title> inBDPA: <%= title %> </title>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            fetch('/getelectioninfo')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('upcomingElections').innerText = data.upcomingElections;
+                    document.getElementById('openElections').innerText = data.openElections;
+                    document.getElementById('closedElections').innerText = data.closedElections;
+                });
+    });
+</script>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
