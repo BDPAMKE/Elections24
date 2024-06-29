@@ -1,4 +1,3 @@
-
 //MODIFY RENDER STATEMENTS TO INCORPORATE AUTH TOKEN INFO!! 4/6/24
 
 //DID I GET A SET OF USERINDICES AND MONGOIDS INTO A MONGODB???
@@ -18,8 +17,8 @@ router.get('/', auth, function(req,res,next) {
     const url = 'https://elections-cpl.api.hscc.bdpa.org/v1/info'
     const token = process.env.BEARER_TOKEN;
     //console.log(url); //Debug
-  
-    
+ 
+   
     // Pass url and token into RestAPIGet and pull information from response
     myGetRestCall.getWithBearerToken(url, token)
     .then(data => {
@@ -27,22 +26,23 @@ router.get('/', auth, function(req,res,next) {
         if (data.success){
             // SUBJECT TO CHANGE
             var electionInfo=data.info;
+            var upcomingElections=data.info.upcomingElections;
+            var openElections=data.info.openElections;
+            var closedElections=data.info.closedElections;
 
-            
-              
+            res.json({
+                "upcomingElections": upcomingElections,
+                "openElections": openElections,
+                "closedElections": closedElections
+              });
+
+             
             // Get the count of the number of users from store
             // var userCount= store.get('users').count;
 
-            res.render('index', { 
-                title: 'Elections 2024',
-               upcomingElections: electionInfo.upcomingElections,
-               openElections: electionInfo.openElections,
-               closedElections: electionInfo.closedElections
-                
-            });
         } // closes if statement
         else{
-            res.render('error', {title: 'Stats call failed', 
+            res.render('error', {title: 'Stats call failed',
             message: data.error,
             id: res.locals.user_id,
             role: res.locals.role,
@@ -59,4 +59,3 @@ router.get('/', auth, function(req,res,next) {
 
 
 module.exports=router;
-    

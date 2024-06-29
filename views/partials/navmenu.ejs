@@ -8,11 +8,13 @@
         <a href="/" class="navbar-brand">
             <img src="/images/bdpalogo.png" alt="HOME LOGO" width="45" height="45">
         </a>
-
+       <res class="locals role"></res>
         <span class="navbar-text navbar-text-large"> ELECTIONS24 </span>
-        <span class="navbar-text"> Total number of upcoming elections: <span id="UpcomingElections"><%= upcomingElections %></span> </span>
-        <span class="navbar-text"> Total number of open elections: <span id="OpenElections"><%= openElections %></span> </span>
-        <span class="navbar-text"> Total number of closed elections: <span id="ClosedElections"><%= closedElections %>  </span></span>
+            <span class="navbar-text"> Total number of upcoming elections: <span id="upcomingElections"><0></span> </span>
+            <span class="navbar-text"> Total number of open elections: <span id="openElections">0</span> </span>
+            <span class="navbar-text"> Total number of closed elections: <span id="closedElections">0</span></span>
+           
+     
 
         <!-- button for collapsing menu-->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,3 +23,16 @@
         </button>
     </div>
 </nav>
+<script defer>
+    window.onload = function () {
+        fetch('/getelectioninfo')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log(data.upcomingElections);
+                document.getElementById('upcomingElections').innerText = data.upcomingElections;
+                document.getElementById('openElections').innerText = data.openElections;
+                document.getElementById('closedElections').innerText = data.closedElections;
+            });
+    };
+</script>
