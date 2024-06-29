@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head> 
+  <%- include('./partials/head') -%> <!-- Including head partial -->
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+</head>
+<body>
+    <%- include('partials/navmenu') %> <!-- Include the navbar here -->
+    
     <h1>Dashboard</h1>
     <p>Elections will go here </p>
     <p> Go to <a href="/register"> register a new user </a> </p>
