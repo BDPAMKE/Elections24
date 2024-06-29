@@ -16,6 +16,12 @@ router.get('/', auth, function(req,res,next) {
 });
 
 router.post('/', auth, async(req,res,next) => {
+    const captchaAnswer = req.body.captchaAnswer;
+    const correctCaptcha = req.body.correctCaptcha;
+    if (parseInt(captchaAnswer) !== parseInt(correctCaptcha)) {
+        return res.status(400).send('Incorrect CAPTCHA answer.');
+    }
+
     if ((res.locals.role) && ((res.locals.role == 'admin') || (res.locals.role == 'super'))) {
         //console.log(req.body.uname);
         //console.log(req.body.userlevel);

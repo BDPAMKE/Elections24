@@ -12,5 +12,15 @@
     <p>Election View</p>
     <p><%= electioninfo %></p>
     <h2>Title: <%= electioninfo.title %></h2>
+    <h3> Ballots </h3>
+    <%for (var key in ballots){%>
+       <% var keyranks = key.split(",");%>
+       <% for (var i=0;i<keyranks.length;i+=2) {%>
+          <%= keyranks[i] %>
+        <% } %>
+       <!-- <%= key %>  -->
+       <%= ballots[key] %><br> 
+  
+ <%}%> <!--to close out for loop -->
   </body>
 </html>
