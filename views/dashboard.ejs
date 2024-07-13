@@ -11,6 +11,10 @@
     <p>Elections will go here </p>
     <p> Go to <a href="/register"> register a new user </a> </p>
     <p> Go to <a href="/electionlist"> View List of Elections </a> </p>
+    <%if (role=="voter") {%>
+    <p> You can vote in the following elections:</p>
+    <p> <a href="/voteelection"> TBD </a></p>
+    <% } %>
     <!-- <p>Please log in:</p>
     <form method="post">
       <label for="uname"> Username: </label>

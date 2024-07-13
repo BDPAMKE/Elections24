@@ -11,6 +11,8 @@ var dashboardRouter = require('./routes/dashboard');
 
 var electionlistRouter = require('./routes/electionlist');
 var viewelectionRouter = require('./routes/viewelection');
+var voteelectionRouter = require('./routes/voteelection');
+var logoutRouter = require('./routes/logout');
 var electionInfoRouter = require('./routes/getelectioninfo');
 var app = express();
 
@@ -25,13 +27,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/register', registerRouter);
 
 app.use('/electionlist', electionlistRouter);
 app.use('/viewelection', viewelectionRouter);
+app.use('/logout', logoutRouter);
+app.use('/voteelection', voteelectionRouter);
 app.use('/getelectionInfo', electionInfoRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

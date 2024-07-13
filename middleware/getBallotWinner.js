@@ -33,7 +33,7 @@ module.exports={
                 }
                 for (ballot in sortedballotArray){
                     ballotarray=sortedballotArray[ballot];
-                    console.log("array",ballotarray)
+                    //console.log("array",ballotarray)
                     var pick=0
                     var ballotcounted=false;
                     while (pick<ballotarray.length && !ballotcounted){
