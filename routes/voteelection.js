@@ -3,6 +3,7 @@ var router = express.Router();
 // Normal include statements
 
 const myGetRestCall=require("../middleware/RestAPIGet");
+const myPutRestCall=require("../middleware/RestAPIPut");
 const auth = require("../middleware/verifyToken");
 //including middleware
 
@@ -58,5 +59,51 @@ router.get('/', auth, function(req,res,next) {
     // });
 
 }); // close router.get general route
+
+//Specific route to a specific ballot
+router.get('/:election_id', auth, function(req,res,next) {
+    const url = 'https://elections-cpl.api.hscc.bdpa.org/v1/elections/' + req.params.election_id
+    const token = process.env.BEARER_TOKEN;
+    //console.log(url);
+
+    myGetRestCall.getWithBearerToken(url, token)
+    .then(data => {
+    //console.log('REST CALL',data);
+    if (data.success){
+        electioninfo=data.election; 
+        //INSERT res.render statement to view the ballot casting page
+        res.render('voteelectionballot', {title: 'Cast ballot', electioninfo: electioninfo})
+        }
+    else{
+        res.render('error', {title: 'Unable to get election info'
+    });
+    }
+
+
+}) // data then component
+.catch(error => console.error(error));
+
+});    
+
+
+//Route to post a vote
+router.post('/:election_id', auth, function(req,res,next) {
+    const name=res.locals.name;
+    console.log(req.body);
+    var keys=Object.keys(req.body)
+    var ranking={}
+    for (var key in keys){
+        //console.log(keys[key]);
+        //console.log(req.body[keys[key]]);
+        var choice=req.body[keys[key]];
+        ranking[choice]=(Number(key)+1)
+    }
+    console.log(ranking);
+    const url = 'https://elections-cpl.api.hscc.bdpa.org/v1/elections/' + req.params.election_id +'/ballots/' +name;
+    const token = process.env.BEARER_TOKEN;
+    const body={"ranking":ranking}
+    myPutRestCall.putWithBearerToken(url, token, body);
+    res.redirect('/voteelection/'+req.params.election_id);
+});
 
 module.exports = router;
